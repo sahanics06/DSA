@@ -93,3 +93,41 @@ public:
         }
     }
 };
+
+
+// Solution using DFS, if conditions satifies then dfs is called with d+1
+// Time - M*N for every possible nodes
+// Space- M*N recursion stack space
+class Solution {
+public:
+    int dj[4]={0,1,0,-1};
+    int di[4]={1,0,-1,0};
+    double mx=2e31-1;
+    void dfs(vector<vector<int>>& grid, int d, int i, int j, int m, int n)
+    {
+        for(int k=0; k<4; k++)
+        {
+            int ti = di[k]+i;
+            int tj = dj[k]+j;
+            if(ti>=0 && ti<m && tj>=0 && tj<n && (grid[ti][tj]==mx || grid[ti][tj]>d+1))
+            {
+                grid[ti][tj]=d+1;
+                dfs(grid, d+1, ti, tj, m, n);
+            }
+        }
+    }
+    void islandsAndTreasure(vector<vector<int>>& grid) {
+        int m=grid.size(), n=grid[0].size(), mx=2e31-1;        
+        for(int i=0; i<m; i++)
+        {
+            for(int j=0; j<n; j++)
+            {
+                if(grid[i][j]==0)
+                {
+                    dfs(grid, 0, i, j, m, n);
+                }
+            }
+        }
+    }
+};
+
